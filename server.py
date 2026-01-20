@@ -1,12 +1,14 @@
-from flask import Flask, make_response, jsonify
-from EmotionDetection import emotion_detector
+from flask import Flask, render_template,request
+from EmotionDetection.emotion_detection import emotion_detector
 
-app = Flask("Emotion Dection")
+app = Flask("Emotion Detection")
 
-@app.route("/emotionDetector/<string:text_to_analyze")
-def emotion_detector(text_to_analyze):
-    emotion_response = emotion_detector(text_to_analyze)
-    return "For the given statement, the system response is "
+@app.route("/emotionDetector")
+def emotion_detector():
+    text_to_analyze = request.args.get("textToAnalyze")
+    print(text_to_analyze)
+    emotion_response = emotion_detector("I hate job")
+    return "For the given statement, the system response is good"
 
 @app.route("/")
 def render_index_page():
