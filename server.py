@@ -4,11 +4,16 @@ from EmotionDetection.emotion_detection import emotion_detector
 app = Flask("Emotion Detection")
 
 @app.route("/emotionDetector")
-def emotion_detector():
+def detect_emotion():
     text_to_analyze = request.args.get("textToAnalyze")
     print(text_to_analyze)
-    emotion_response = emotion_detector("I hate job")
-    return "For the given statement, the system response is good"
+    emotion_response = emotion_detector(text_to_analyze)
+    response =f"""For the given statement, the system response is 
+    'anger': {emotion_response["anger"]}, 'disgust': {emotion_response["disgust"]},
+    'fear': {emotion_response["fear"]}, 'joy': {emotion_response["joy"]},
+    'sadness': {emotion_response["sadness"]}.  The dominant emotion is {emotion_response["dominant_emotion"]}.
+    """
+    return response
 
 @app.route("/")
 def render_index_page():
